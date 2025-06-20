@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://bchamg0h5rqm8"]
+
+[ext_resource type="Script" uid="uid://5i308oabco33" path="res://scenes/main.gd" id="1_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://5xg1i1fyu4nx" path="res://assets/20250616_1455_Clear Sky Landscape_remix_01jxwcvqadepfaynsw90d7et93.png" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://cd52upyb0brv3" path="res://scenes/default_bird.tscn" id="3_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://cbu5i70isjfjl" path="res://assets/ChatGPT Image Jun 16, 2025, 01_40_01 PM.png" id="3_tefeu"]
+[ext_resource type="PackedScene" uid="uid://elexwvdvlqba" path="res://scenes/high_voltage_cable.tscn" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://k1g8nesfgp62" path="res://scenes/pipe.tscn" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://8iyaircukrae" path="res://scenes/ammo.tscn" id="7_o6xl0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6xl0"]
+atlas = ExtResource("3_tefeu")
+region = Rect2(0, 0, 341, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tipki"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6xl0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_0wfyh")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(487.5, 324)
+scale = Vector2(0.634766, 0.632813)
+texture = ExtResource("1_o5qli")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Background"]
+position = Vector2(-643.545, 121.679)
+sprite_frames = SubResource("SpriteFrames_tipki")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Background"]
+position = Vector2(667.175, 139.062)
+sprite_frames = SubResource("SpriteFrames_tipki")
+
+[node name="DefaultBird" parent="." node_paths=PackedStringArray("cable_node") instance=ExtResource("3_jyhfs")]
+cable_node = NodePath("../HighVoltageCable")
+
+[node name="HighVoltageCable" parent="." instance=ExtResource("4_tbgi4")]
+
+[node name="Pipe" parent="." instance=ExtResource("5_tbgi4")]
+ammo_scene = ExtResource("7_o6xl0")
+
+[node name="Ammo" parent="." instance=ExtResource("7_o6xl0")]

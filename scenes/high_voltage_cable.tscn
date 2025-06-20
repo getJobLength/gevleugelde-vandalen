@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://elexwvdvlqba"]
+
+[ext_resource type="Script" uid="uid://cgckjuor3lddk" path="res://scenes/high_voltage_cable.gd" id="1_m7n2y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsvxq"]
+size = Vector2(1000, 10)
+
+[node name="HighVoltageCable" type="Area2D"]
+script = ExtResource("1_m7n2y")
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2(0, -1)
+points = PackedVector2Array(-496, 1, 490, 1)
+default_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jsvxq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3 uid="uid://bchamg0h5rqm8"]
+
+[ext_resource type="Script" uid="uid://5i308oabco33" path="res://scenes/main.gd" id="1_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://5xg1i1fyu4nx" path="res://assets/20250616_1455_Clear Sky Landscape_remix_01jxwcvqadepfaynsw90d7et93.png" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://cd52upyb0brv3" path="res://scenes/default_bird.tscn" id="3_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://cbu5i70isjfjl" path="res://assets/ChatGPT Image Jun 16, 2025, 01_40_01 PM.png" id="3_tefeu"]
+[ext_resource type="PackedScene" uid="uid://elexwvdvlqba" path="res://scenes/high_voltage_cable.tscn" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://k1g8nesfgp62" path="res://scenes/pipe.tscn" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://8iyaircukrae" path="res://scenes/ammo.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://bcrek5qi0lqss" path="res://scenes/bird_spawner.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://gjxax1uhqdg6" path="res://scenes/score.tscn" id="9_85g3d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6xl0"]
+atlas = ExtResource("3_tefeu")
+region = Rect2(0, 0, 341, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tipki"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6xl0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_0wfyh")
+bird_scene = ExtResource("3_jyhfs")
+bird_spawn_interval = 1.0
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(487.5, 324)
+scale = Vector2(0.634766, 0.632813)
+texture = ExtResource("1_o5qli")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Background"]
+position = Vector2(-643.545, 121.679)
+sprite_frames = SubResource("SpriteFrames_tipki")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Background"]
+position = Vector2(667.175, 139.062)
+sprite_frames = SubResource("SpriteFrames_tipki")
+
+[node name="HighVoltageCable" parent="." instance=ExtResource("4_tbgi4")]
+position = Vector2(492, 440)
+
+[node name="Pipe" parent="." instance=ExtResource("5_tbgi4")]
+position = Vector2(477, 636)
+ammo_scene = ExtResource("7_o6xl0")
+
+[node name="Ammo" parent="." instance=ExtResource("7_o6xl0")]
+position = Vector2(480, 642)
+
+[node name="BirdSpawner" parent="." instance=ExtResource("8_tipki")]
+position = Vector2(466, 345)
+
+[node name="Score" parent="." instance=ExtResource("9_85g3d")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+grow_horizontal = 2
+size_flags_vertical = 0
+text = "Score 
+0"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="Ammo" to="Score" method="_on_ammo_body_entered"]
+[connection signal="hit" from="Ammo" to="Score" method="_on_ammo_hit_increase_score" binds= [false]]
